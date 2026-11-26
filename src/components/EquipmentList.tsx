@@ -1,5 +1,5 @@
 import EquipmentSet from './EquipmentSet'
-import { Container, Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 
 const sets = [
   'AlphaBridge',
@@ -20,14 +20,12 @@ const sets = [
 
 export default function EquipmentList() {
   return (
-    <Container>
-      <Grid container spacing={1}>
-        {sets.map((set) => (
-          <Grid item xs={12} sm={6} md={4} key={set}>
-            <EquipmentSet name={set} />
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+    <Grid container spacing={2}>
+      {sets.map((set) => (
+        <Grid item xs={12} sm={6} md={4} key={set}>
+          <EquipmentSet name={set} />
+        </Grid>
+      ))}
+    </Grid>
   )
 }

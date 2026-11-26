@@ -1,6 +1,5 @@
 import { Typography, Box, IconButton } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
-import RemoveIcon from '@mui/icons-material/Remove'
+import { Add as AddIcon, Remove as RemoveIcon } from '@mui/icons-material'
 
 import chestIcon from '../assets/icons/Pecho.svg'
 import maskIcon from '../assets/icons/Mascara.svg'
@@ -40,40 +39,62 @@ export default function EquipmentItem({
   onIncrement,
   onDecrement,
 }: EquipmentItemProps) {
+  const active = count > 0
+  const label = friendlyNames[name]
+
   return (
     <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="space-between"
-      mb={1}
-      className={count > 0 ? 'item-box-active' : 'item-box'}
+      sx={(theme) => ({
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        mb: 1,
+        py: 0.5,
+        pl: 1.5,
+        pr: 0.5,
+        borderRadius: 1,
+        border: 1,
+        borderColor: active ? 'primary.main' : 'divider',
+        bgcolor: active ? 'primary.main' : 'transparent',
+        color: active ? 'primary.contrastText' : 'text.primary',
+        transition: theme.transitions.create(['background-color', 'border-color', 'color'], {
+          duration: 200,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        }),
+      })}
     >
-      <Box display="flex" alignItems="center">
-        <img
-          src={iconMap[name]}
-          alt={name}
-          className="icon-green"
-          style={{ width: '35px', marginRight: '8px' }}
+      <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0 }}>
+        <Box
+          component="span"
+          aria-hidden
+          className="item-icon"
+          sx={{ color: active ? 'primary.contrastText' : 'primary.main' }}
+          style={{ maskImage: `url("${iconMap[name]}")`, WebkitMaskImage: `url("${iconMap[name]}")` }}
         />
-        <Typography className="nameItem" variant="body2">
-          {friendlyNames[name]}{' '}
-        </Typography>
-        <Typography className="counter">{count}</Typography>
+        <Typography sx={{ fontWeight: 500, fontSize: '1.05rem', ml: 1.5 }}>{label}</Typography>
       </Box>
-      <Box>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <IconButton
-          size="large"
-          onClick={onIncrement}
-          style={{ color: count > 0 ? '#ffffff' : '#4caf50' }}
-        >
-          <AddIcon />
-        </IconButton>
-        <IconButton
-          size="large"
+          aria-label={`Quitar ${label}`}
           onClick={onDecrement}
-          style={{ marginLeft: '5px', color: count > 0 ? '#ffffff' : '#f44336' }}
+          disabled={!active}
+          sx={{ color: 'inherit' }}
         >
           <RemoveIcon />
+        </IconButton>
+        <Typography
+          aria-live="polite"
+          className="counter"
+          sx={{ fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700, fontSize: '1.5rem' }}
+        >
+          {count}
+        </Typography>
+        <IconButton
+          aria-label={`Agregar ${label}`}
+          onClick={onIncrement}
+          sx={{ color: active ? 'inherit' : 'primary.main' }}
+        >
+          <AddIcon />
         </IconButton>
       </Box>
     </Box>

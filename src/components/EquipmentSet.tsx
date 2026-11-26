@@ -75,20 +75,17 @@ export default function EquipmentSet({ name }: EquipmentSetProps) {
   }
 
   return (
-    <Paper elevation={3} style={{ padding: '8px', marginBottom: '8px' }}>
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        style={{ padding: '3px', marginBottom: '5px' }}
-      >
-        <img
-          src={iconMap[name]}
-          alt={name}
-          className="icon-green"
-          style={{ width: '40px', marginRight: '8px' }}
+    <Paper variant="outlined" sx={{ p: 2, height: '100%' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5, mb: 2 }}>
+        <Box
+          component="span"
+          role="img"
+          aria-label={name}
+          className="item-icon set-icon"
+          sx={{ color: 'primary.main' }}
+          style={{ maskImage: `url("${iconMap[name]}")`, WebkitMaskImage: `url("${iconMap[name]}")` }}
         />
-        <Typography variant="subtitle1" gutterBottom>
+        <Typography variant="subtitle1" component="h2">
           {name}
         </Typography>
       </Box>
